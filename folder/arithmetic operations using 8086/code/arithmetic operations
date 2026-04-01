@@ -1,0 +1,121 @@
+Addition:
+                OUTPUT 2500AD
+.ORG 2000H
+DATA SEGMENT
+NO1 DW AAAAH
+NO2 DW BBBBH
+SUM DW 0000H
+CARRY DB 00H
+DATA ENDS
+CODE SEGMENT
+        ASSUME CS:CODE,DS:DATA
+        MOV AX,DATA
+        MOV DS,AX
+        MOV CL,00H
+        MOV AX,NO1
+        ADD AX,NO2
+        JNC L1
+        INC CL
+L1: MOV SUM,AX
+        MOV CARRY,CL
+CODE ENDS
+
+
+
+                  
+Subration:
+                          OUTPUT 2500AD
+.ORG 2000H
+DATA SEGMENT
+NO1 DW AAAAH
+NO2 DW BBBBH
+DIFF DW 0000H
+BORROW DB 00H
+DATA ENDS
+CODE SEGMENT
+        ASSUME CS:CODE,DS:DATA
+        MOV AX,DATA
+        MOV DS,AX
+        MOV CL,00H
+        MOV AX,NO1
+        SUB AX,NO2
+        JNC L1
+        INC CL
+L1: MOV DIFF,AX
+        MOV BORROW,CL
+CODE ENDS
+END                 
+
+
+                  
+ Multiplication:
+                          OUTPUT 2500AD
+.ORG 2000H
+DATA SEGMENT
+NO1 DW AAAAH
+NO2 DW BBBBH
+LSB DW 0000H
+MSB DW 0000H
+DATA ENDS
+CODE SEGMENT
+        ASSUME CS:CODE,DS:DATA
+        MOV AX,DATA
+        MOV DS,AX
+        MOV AX,NO1
+        MOV BX,NO2
+        MUL BX
+        MOV LSB,AX
+        MOV MSB,DX
+CODE ENDS
+END
+
+                  
+Division:
+   DIV:
+                OUTPUT 2500AD
+.ORG 2000H
+DATA SEGMENT
+NO1 DW AAAAH
+NO2 DW BBBBH
+QUO DW 0000H
+REM DW 0000H
+DATA ENDS
+CODE SEGMENT
+        ASSUME CS:CODE,DS:DATA
+        MOV AX,DATA
+        MOV DS,AX
+        MOV DX,0000H
+        MOV AX,NO1
+        MOV BX,NO2
+        DIV BX
+        MOV QUO,AX
+        MOV REM,DX
+CODE ENDS
+END    
+
+
+
+                  
+Power of n:
+                OUTPUT 2500AD
+.ORG 2000H
+DATA SEGMENT
+X DB 02H
+N DB 03H
+RES DW 0000H
+DATA ENDS
+CODE SEGMENT
+        ASSUME CS:CODE,DS:DATA
+        MOV AX,DATA
+        MOV DS,AX
+        MOV CL,N
+        MOV AL,01H
+        MOV CL,N
+        MOV BL,X
+L1:
+        MUL BL
+        DEC CL
+        JNZ L1
+        MOV RES,AX
+CODE ENDS
+END          
