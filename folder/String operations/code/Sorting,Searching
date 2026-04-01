@@ -1,0 +1,195 @@
+Sorting:
+                OUTPUT 2500AD
+.ORG 2000H
+DATA SEGMENT
+ARRAY DW 0000H,0001H,0003H,0002H,0004H
+COUNT EQU 0005H
+DATA ENDS
+CODE SEGMENT
+        ASSUME CS:CODE,DS:DATA
+        MOV AX,DATA
+        MOV DS,AX
+        MOV DX,COUNT
+        DEC DX
+L2:
+        MOV CX,DX
+        MOV SI,OFFSET ARRAY
+L1:
+        MOV AX,[SI]
+        CMP AX,2[SI]
+        JC L3
+        XCHG AX,2[SI]
+        XCHG AX,[SI]
+L3:
+        INC SI
+        INC SI
+        LOOP L1
+        DEC DX
+        JNZ L2
+        HLT
+CODE ENDS
+END
+
+
+
+
+Searching:
+               OUTPUT 2500AD
+.ORG 2000H
+DATA SEGMENT
+ARRAY DW 0000H,0001H,0003H,0002H,0004H
+COUNT EQU 0005H
+KEY DW 0000H
+RES DB 00H
+DATA ENDS
+CODE SEGMENT
+        ASSUME CS:CODE,DS:DATA
+        MOV AX,DATA
+        MOV DS,AX
+        MOV CX,COUNT
+        MOV SI,OFFSET ARRAY
+        MOV RES,00H
+L1:
+        MOV AX,[SI]
+        CMP AX,KEY
+        JE L2
+        INC SI
+        INC SI
+        LOOP L1
+        HLT
+L2:     MOV RES,01H
+        HLT
+CODE ENDS
+END
+
+
+
+Average:
+               OUTPUT 2500AD
+.ORG 2000H
+DATA SEGMENT
+ARR DB 01H, 02H, 03H, 04H, 05H, 06H, 07H, 08H, 09H, 01H
+SUM DB 00H
+AVG DW 0000H
+COUNT EQU 0000AH
+DATA ENDS
+CODE SEGMENT
+        ASSUME CS:CODE,DS:DATA
+        MOV AX, DATA
+    MOV DS, AX
+    MOV SI, OFFSET ARR
+    MOV CX, COUNT
+    MOV AH,00H
+        MOV AL,00H
+        CLC
+L1: ADC AL,[SI]
+    INC SI
+        LOOP L1
+        JNC L2
+        INC AH
+L2: MOV SUM,AL
+        MOV DX,0000H
+        MOV BX,COUNT
+        DIV BX
+        MOV AVG,AX
+        HLT
+CODE ENDS
+END
+
+
+
+
+String Compare:
+
+                OUTPUT 2500AD
+.ORG 2000H
+DATA SEGMENT
+STRING1 DB "HELLO"
+STRING2 DB "HELLO"
+RESULT DB 00H
+COUNT EQU 05H
+DATA ENDS
+CODE SEGMENT
+        ASSUME CS:CODE,DS:DATA,ES:DATA
+        MOV AX,DATA
+        MOV DS,AX
+        MOV ES,AX
+        MOV CL,COUNT
+        LEA SI,STRING1
+        LEA DI,STRING2
+        CLD
+L2:     CMPSB
+        JZ L1
+        JMP L3
+L1:     DEC CL
+        JNZ L2
+        MOV RESULT,01H
+L3:     HLT
+CODE ENDS
+END
+
+
+
+Occurrence:
+
+                OUTPUT 2500AD
+.ORG 2000H
+DATA SEGMENT
+STR1 DB "APPLE"
+CHAR DB 'E'
+RES DB 00H
+COUNT EQU 05H
+DATA ENDS
+CODE SEGMENT
+        ASSUME CS:CODE,DS:DATA,ES:DATA
+        MOV AX,DATA
+        MOV DS,AX
+        MOV ES,AX
+        MOV CL,COUNT
+        LEA DI,STR1
+        MOV AL,CHAR
+        CLD
+L2: SCASB
+        JNZ L1
+        MOV RES,01H
+        JMP L3
+L1:MOV RES,00H
+   DEC CL
+   JNZ L2
+L3: HLT
+CODE ENDS
+END
+
+
+Replace :
+REPLACE:
+
+                OUTPUT 2500AD
+.ORG 2000H
+DATA SEGMENT
+STR1  DB 'BRNYNG'
+LEN DW 6
+RESULT DB 01H
+DATA ENDS
+CODE SEGMENT
+    ASSUME CS:CODE, DS:DATA
+    MOV AX, DATA
+    MOV DS, AX
+    LEA SI, STR1
+        MOV CX,LEN
+    MOV BL, 'E'
+REPLACE_LOOP:
+    MOV AL, [SI]
+    CMP AL, 'A'
+    JNE NEXT_CHAR
+    MOV RESULT, 00H
+    MOV [SI], BL
+NEXT_CHAR:
+    INC SI
+    LOOP REPLACE_LOOP
+    HLT
+CODE ENDS
+END
+
+
+
